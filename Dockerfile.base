@@ -1,0 +1,54 @@
+# 이미지 불러오기
+FROM        ubuntu:16.04
+# 사용자 계정
+MAINTAINER  dfg1499@gmail.com
+
+# 쉘 명령
+# 리눅스 업그레이드
+RUN         apt-get update -y
+RUN         apt-get dist-upgrade -y
+# apt-utils install 메시지 대응
+RUN         apt-get install -y --no-install-recommends apt-utils
+# 언어 세팅
+ENV         LANG C.UTF-8
+
+#pip, git, vim 설치
+RUN         apt-get install -y python-pip git vim
+
+# pyenv 설치
+# common build
+# https://github.com/pyenv/pyenv/wiki/Common-build-problems
+RUN         apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+            libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+            xz-utils tk-dev
+# pyenv installer
+RUN         curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+# path 설정
+ENV         PATH=/root/.pyenv/bin:$PATH
+# python 설치
+RUN         pyenv install 3.6.3
+
+# zsh
+RUN         apt-get install -y zsh
+# oh-my-zsh
+RUN         curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+RUN         chsh -s /usr/bin/zsh
+
+# pyenv settings
+RUN         echo 'export PATH="/root/.pyenv/bin:$PATH"' >> ~/.zshrc
+RUN         echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+RUN         echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+
+# pyenv virtualenv
+RUN         pyenv virtualenv 3.6.3 app
+
+# uWSGI install
+RUN         /root/.pyenv/versions/app/bin/pip install uwsgi
+
+# Nginx install
+RUN         apt-get install -y nginx
+
+# Supervisor install
+RUN         apt-get install -y supervisor
+
