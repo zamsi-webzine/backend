@@ -1,5 +1,15 @@
 from .base import *
 
+# Static & Media files
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+
 # Database
 
 DB_PATH = os.path.join(ROOT_DIR, '.config_secret/local.json')
