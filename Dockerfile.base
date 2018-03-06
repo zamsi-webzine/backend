@@ -9,6 +9,9 @@ RUN         apt-get clean -y
 RUN         apt-get update -y
 RUN         apt-get dist-upgrade -y
 
+# apt-utils install 메시지 대응
+RUN         apt-get install -y apt-utils
+
 #pip, git, vim 설치
 RUN         apt-get install -y python-pip git vim
 
@@ -29,11 +32,8 @@ RUN         pyenv install 3.6.3
 # zsh
 RUN         apt-get install -y zsh
 # oh-my-zsh
-RUN         curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+RUN          wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN         chsh -s /usr/bin/zsh
-
-# apt-utils install 메시지 대응
-RUN         apt-get install -y --no-install-recommends apt-utils
 
 # 언어 세팅
 ENV         LANG C.UTF-8
