@@ -1,5 +1,5 @@
 # Custom
-.config_secret/
+!.config_secret/
 .static_root/
 .media/
 
