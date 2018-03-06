@@ -30,10 +30,16 @@ for key, value in secrets.items():
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 
 # Media files
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 
 # Allowed hosts
 
