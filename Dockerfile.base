@@ -32,7 +32,7 @@ RUN         pyenv install 3.6.3
 # zsh
 RUN         apt-get install -y zsh
 # oh-my-zsh
-RUN          wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+RUN         wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN         chsh -s /usr/bin/zsh
 
 # 언어 세팅
@@ -57,3 +57,6 @@ RUN         apt-get install -y supervisor
 
 # Redis install
 RUN         apt-get install -y redis-server
+
+# Postgresql Install
+RUN         apt-get install -y postgresql postgresql-contrib
