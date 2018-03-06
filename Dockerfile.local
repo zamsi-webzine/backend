@@ -10,16 +10,11 @@ ENV         DJANGO_SETTINGS_MODULE config.settings.local
 COPY        . /srv/app
 # requirememts 설치
 RUN         /root/.pyenv/versions/app/bin/pip install -r \
-            /srv/app/requirements.txt
+            /srv/app/requirements/local.txt
 
 # pyenv 환경 설정
 WORKDIR     /srv/app
 RUN         pyenv local app
-
-# Postgresql
-# 파일 설치 및 서버 실행
-RUN         apt-get update -y
-RUN         apt-get install -y postgresql postgresql-contrib
 
 # Supervisor 실행을 위한 준비
 # https://nicksergeant.com/using-postgresql-with-supervisor-on-ubuntu-1010/
