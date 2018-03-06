@@ -55,7 +55,9 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 # Supervisor
 # 설정 파일 복사
-RUN         cp /srv/app/.config/supervisor/* \
+RUN         cp /srv/app/.config/supervisor/base/* \
+                /etc/supervisor/conf.d/
+RUN         cp /srv/app/.config/supervisor/local/* \
                 /etc/supervisor/conf.d/
 # foreground 실행
 CMD         supervisord -n
