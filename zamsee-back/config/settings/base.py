@@ -40,7 +40,7 @@ MEDIA_URL = '/media/'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '*.elasticbeanstalk.com',
+    '.elasticbeanstalk.com',
 ]
 
 # Application definition
