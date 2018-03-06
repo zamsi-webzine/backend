@@ -10,7 +10,7 @@ ENV         DJANGO_SETTINGS_MODULE config.settings.local
 COPY        . /srv/app
 # requirememts 설치
 RUN         /root/.pyenv/versions/app/bin/pip install -r \
-            /srv/app/requirements.txt
+            /srv/app/requirements/local.txt
 
 # pyenv 환경 설정
 WORKDIR     /srv/app
