@@ -16,6 +16,11 @@ STATICFILES_STORAGE = 'config.storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
+# AWS HealthChecker
+private_ip = get_linux_ec2_private_ip()
+if private_ip:
+    ALLOWED_HOSTS.append(private_ip)
+
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True
