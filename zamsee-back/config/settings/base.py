@@ -44,7 +44,7 @@ MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 # Allowed hosts
 
 ALLOWED_HOSTS = [
-    'localhost:8000',
+    'localhost',
     '127.0.0.1',
 ]
 
