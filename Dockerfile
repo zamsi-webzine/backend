@@ -4,7 +4,7 @@ FROM        lanark/zamsee-base:latest
 MAINTAINER  dfg1499@gmail.com
 # 언어 환경 설정
 ENV         LANG C.UTF-8
-ENV         DJANGO_SETTINGS_MODULE config.settings.dev
+ENV         DJANGO_SETTINGS_MODULE config.settings.production
 
 # 현재 폴더 전체를 /srv/app에 복사
 COPY        . /srv/app
