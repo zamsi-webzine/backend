@@ -1,3 +1,104 @@
 .container-fluid {
     padding: 0;
 }
+#carousel-main {
+    position: relative;
+}
+.carousel-caption {
+    writing-mode: tb-rl;
+    position: absolute;
+    top: 5%;
+}
+/*// Small devices (landscape phones, 320px 이상)*/
+@media (min-width: 320px) {
+    .carousel-caption {
+        right: 8%;
+    }
+    .carousel-caption > h1 {
+        font-size: 1.6em !important;
+        margin: 0 10px 0 10px;
+    }
+    .carousel-caption > h3 {
+        font-size: 0.6em !important;
+        margin: 0 2px 0 2px;
+    }
+}
+
+/*// Small devices (landscape phones, 414px 이상)*/
+@media (min-width: 414px) {
+    .carousel-caption {
+        right: 8%;
+    }
+    .carousel-caption > h1 {
+        font-size: 2em !important;
+        margin: 0 12px 0 12px;
+    }
+    .carousel-caption > h3 {
+        font-size: 0.8em !important;
+        margin: 0 6px 0 6px;
+    }
+}
+
+/*// Small devices (landscape phones, 576px 이상)*/
+@media (min-width: 576px) {
+    .carousel-caption {
+        right: 10%;
+    }
+    .carousel-caption > h1 {
+        font-size: 3.4em !important;
+        margin: 0 22px 0 22px;
+    }
+    .carousel-caption > h3 {
+        font-size: 1.4em !important;
+        margin: 0 14px 0 14px;
+    }
+}
+
+/*// Medium devices (tablets, 768px 이상)*/
+@media (min-width: 768px) {
+    .carousel-caption {
+        right: 10%;
+    }
+    .carousel-caption > h1 {
+        font-size: 3.8em !important;
+        margin: 0 30px 0 30px;
+    }
+    .carousel-caption > h3 {
+        font-size: 1.6em !important;
+        margin: 0 22px 0 22px;
+    }
+}
+
+/*// Large devices (desktops, 992px 이상)*/
+@media (min-width: 992px) {
+    .carousel-caption {
+        right: 12%;
+    }
+    .carousel-caption > h1 {
+        font-size: 4.2em !important;
+        margin: 0 36px 0 36px;
+    }
+    .carousel-caption > h3 {
+        font-size: 1.8em !important;
+        margin: 0 28px 0 28px;
+    }
+}
+
+/*// Extra large devices (large desktops, 1200px 이상)*/
+@media (min-width: 1200px) {
+    .carousel-caption {
+        right: 12%;
+    }
+    .carousel-caption > h1 {
+        font-size: 4.6em !important;
+        margin: 0 40px 0 40px;
+    }
+    .carousel-caption > h3 {
+        font-size: 2em !important;
+        margin: 0 32px 0 32px;
+    }
+}
+
+.jumbotron {
+    background-color: #080808;
+}
