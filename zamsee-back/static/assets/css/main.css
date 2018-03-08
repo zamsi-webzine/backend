@@ -1,104 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200i,500,800');
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*-------------header-------------*/
 .container-fluid {
     padding: 0;
 }
-#carousel-main {
-    position: relative;
-}
-.carousel-caption {
-    writing-mode: tb-rl;
-    position: absolute;
-    top: 5%;
-}
-/*// Small devices (landscape phones, 320px 이상)*/
-@media (min-width: 320px) {
-    .carousel-caption {
-        right: 8%;
-    }
-    .carousel-caption > h1 {
-        font-size: 1.6em !important;
-        margin: 0 10px 0 10px;
-    }
-    .carousel-caption > h3 {
-        font-size: 0.6em !important;
-        margin: 0 2px 0 2px;
-    }
+
+.nav {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(to right, #0081D5, #A133D5) !important;
 }
 
-/*// Small devices (landscape phones, 414px 이상)*/
-@media (min-width: 414px) {
-    .carousel-caption {
-        right: 8%;
-    }
-    .carousel-caption > h1 {
-        font-size: 2em !important;
-        margin: 0 12px 0 12px;
-    }
-    .carousel-caption > h3 {
-        font-size: 0.8em !important;
-        margin: 0 6px 0 6px;
-    }
+/*-------------body-------------*/
+#wrap-body {
+    padding: 50px 0 50px 0;
 }
 
-/*// Small devices (landscape phones, 576px 이상)*/
-@media (min-width: 576px) {
-    .carousel-caption {
-        right: 10%;
-    }
-    .carousel-caption > h1 {
-        font-size: 3.4em !important;
-        margin: 0 22px 0 22px;
-    }
-    .carousel-caption > h3 {
-        font-size: 1.4em !important;
-        margin: 0 14px 0 14px;
-    }
+/*-------------picture-------------*/
+.col-sm-10 {
+    padding: 0 30px 0 30px;
 }
 
-/*// Medium devices (tablets, 768px 이상)*/
-@media (min-width: 768px) {
-    .carousel-caption {
-        right: 10%;
-    }
-    .carousel-caption > h1 {
-        font-size: 3.8em !important;
-        margin: 0 30px 0 30px;
-    }
-    .carousel-caption > h3 {
-        font-size: 1.6em !important;
-        margin: 0 22px 0 22px;
-    }
+/*-------------title & text-------------*/
+#d-day-title > h1 {
+    margin-bottom: 30px;
+    font-weight: 800 !important;
 }
 
-/*// Large devices (desktops, 992px 이상)*/
-@media (min-width: 992px) {
-    .carousel-caption {
-        right: 12%;
-    }
-    .carousel-caption > h1 {
-        font-size: 4.2em !important;
-        margin: 0 36px 0 36px;
-    }
-    .carousel-caption > h3 {
-        font-size: 1.8em !important;
-        margin: 0 28px 0 28px;
-    }
+#description {
+    font-family: 'KoPub Batang', serif;
 }
 
-/*// Extra large devices (large desktops, 1200px 이상)*/
-@media (min-width: 1200px) {
-    .carousel-caption {
-        right: 12%;
-    }
-    .carousel-caption > h1 {
-        font-size: 4.6em !important;
-        margin: 0 40px 0 40px;
-    }
-    .carousel-caption > h3 {
-        font-size: 2em !important;
-        margin: 0 32px 0 32px;
-    }
-}
+/*-------------footer-------------*/
 
 .jumbotron {
-    background-color: #080808;
+    margin: 70px 0 0 0;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*-------------responsive-------------*/
+
+@media (max-width: 1680px) {
+    #main-logo {
+        width: 200px;
+    }
+
+    #description > h3 {
+        font-size: 4rem !important;
+    }
+
+    .jumbotron {
+        height: 300px;
+    }
+
+    #copyright {
+        font-weight: 200;
+        font-size: 1.5rem;
+    }
+
+}
+
+@media (max-width: 414px) {
+    #main-logo {
+        width: 160px;
+    }
+
+    #description > h3 {
+        font-size: 2rem !important;
+    }
+
+    .jumbotron {
+        height: 200px;
+    }
+
+    #copyright {
+        font-weight: 200;
+        font-size: 1rem;
+    }
+
 }

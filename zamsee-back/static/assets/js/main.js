@@ -1,3 +1,3 @@
-$('.carousel').carousel({
-  interval: 5000
+$(function () {
+  $('[data-toggle="popover"]').popover()
 });
