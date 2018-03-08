@@ -12,6 +12,14 @@
     width: 160px;
 }
 
+#wrap-body {
+    padding: 50px 0 30px 0;
+}
+
+.col-sm-6 {
+    margin: 0 10px 0 10px;
+}
+
 .jumbotron {
     background-color: black;
     display: flex;

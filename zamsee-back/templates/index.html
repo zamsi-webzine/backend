@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %}
 <!doctype html>
 <html lang="ko">
 <head>
@@ -39,14 +40,15 @@
         </li>
     </ul>
 </header>
-<section class="container">
-
+<section class="container" id="wrap-body">
     <div class="row align-items-end">
         <div class="col-sm">
 
         </div>
-        <div class="col-sm">
-            One of three columns
+        <div class="col-sm-6">
+            <div class="text-center">
+                <img src="https://doy0iundk4hjr.cloudfront.net/static/assets/images/cities/landing_0{% rand_num 8 %}.jpg" class="rounded-circle img-fluid" alt="도시">
+            </div>
         </div>
         <div class="col-sm">
 
@@ -54,6 +56,7 @@
     </div>
     </div>
 </section>
+
 <footer class="jumbotron jumbotron-fluid">
     <div class="container">
         <p id="d-day" class="text-center text-white">Open | 2018.05</p>
