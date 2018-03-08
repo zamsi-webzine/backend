@@ -7,4 +7,4 @@ register = template.Library()
 
 @register.simple_tag
 def rand_num(value):
-    return random.randint(1, value + 1)
+    return random.randint(1, value)
