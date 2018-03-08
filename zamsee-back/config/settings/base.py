@@ -41,6 +41,9 @@ STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 
+# Auth user model
+AUTH_USER_MODEL = 'member.ZSUser'
+
 # Allowed hosts
 
 ALLOWED_HOSTS = [
