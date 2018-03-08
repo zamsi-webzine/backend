@@ -16,10 +16,6 @@ body {
     background: linear-gradient(to right, #0081D5, #A133D5) !important;
 }
 
-#main-logo {
-    width: 160px;
-}
-
 /*-------------body-------------*/
 #wrap-body {
     padding: 50px 0 50px 0;
@@ -47,26 +43,47 @@ body {
     background-color: black;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
+/*-------------responsive-------------*/
+
 @media (max-width: 1680px) {
-    #copyright {
-        font-weight: 200;
-        font-size: 1.5rem;
+    #main-logo {
+        width: 200px;
+    }
+
+    #description > h3 {
+        font-size: 4rem !important;
     }
 
     .jumbotron {
         height: 300px;
     }
+
+    #copyright {
+        font-weight: 200;
+        font-size: 1.5rem;
+    }
+
 }
 
 @media (max-width: 414px) {
-    #copyright {
-        font-weight: 200;
-        font-size: 1rem;
+    #main-logo {
+        width: 160px;
+    }
+
+    #description > h3 {
+        font-size: 2rem !important;
     }
 
     .jumbotron {
         height: 200px;
     }
+
+    #copyright {
+        font-weight: 200;
+        font-size: 1rem;
+    }
+
 }
