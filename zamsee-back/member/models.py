@@ -26,7 +26,7 @@ class ZSUserManager(BaseUserManager):
             password=password,
         )
         user.is_active = True
-        user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -50,9 +50,9 @@ class ZSUser(AbstractBaseUser, PermissionsMixin):
     objects = ZSUserManager()
 
     is_active = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email',
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nickname']
 
     class Meta:
@@ -65,4 +65,4 @@ class ZSUser(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_staff(self):
-        return self.is_admin
+        return self.is_superuser

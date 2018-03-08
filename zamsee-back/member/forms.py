@@ -80,7 +80,7 @@ class UserChangeForm(forms.ModelForm):
             'email',
             'nickname',
             'is_active',
-            'is_admin',
+            'is_superuser',
         )
 
     def clean_password(self):
