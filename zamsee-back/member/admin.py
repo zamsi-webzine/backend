@@ -11,7 +11,7 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', 'nickname', 'is_active', 'is_superuser', 'date_joined',)
+    list_display = ('pk', 'email', 'nickname', 'is_active', 'is_superuser', 'date_joined',)
     list_filter = ('date_joined',)
     fieldsets = (
         (None, {'fields': ('email', 'password',)}),
