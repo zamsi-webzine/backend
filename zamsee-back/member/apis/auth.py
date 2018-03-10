@@ -1,7 +1,20 @@
+from django.contrib.auth import authenticate
 from django.http import HttpResponse
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 class Login(APIView):
-    def get(self, request):
-        return HttpResponse('<h1>Hello</h1>')
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        user = authenticate(
+            email=email,
+            password=password
+        )
+        if user:
+            context = {
+                'nickname': user.nickname
+            }
+            return Response(context)
