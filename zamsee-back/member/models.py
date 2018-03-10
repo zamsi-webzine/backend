@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from rest_framework.authtoken.models import Token
 
 
 class ZSUserManager(BaseUserManager):
@@ -62,6 +63,10 @@ class ZSUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.nickname
+
+    @property
+    def token(self):
+        return Token.objects.get_or_create(user=self)[0]
 
     @property
     def is_staff(self):
