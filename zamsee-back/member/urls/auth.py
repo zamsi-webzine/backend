@@ -3,5 +3,5 @@ from django.urls import path
 from .. import apis
 
 urlpatterns = [
-    path('login/', apis.Login.as_view(), name='login'),
+    path('obtain_token/', apis.ObtainToken.as_view(), name='login'),
 ]
