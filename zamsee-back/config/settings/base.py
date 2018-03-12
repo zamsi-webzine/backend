@@ -65,8 +65,11 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    # CORS 헤더 인식을 위한 어플
     'corsheaders',
+    # shall_plus 등을 쓰게 해주는 어플
     'django_extensions',
+    # Rest frameworks
     'rest_framework',
     'storages',
     'rest_framework.authtoken',
@@ -114,7 +117,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Rest framework
+# Rest frameworks
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -125,6 +128,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+# JWT Token configuration
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),

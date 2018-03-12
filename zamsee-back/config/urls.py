@@ -24,5 +24,5 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('auth/', include('member.urls.auth')),
+    path('auth/', include('member.urls', namespace='authentication'))
 ]

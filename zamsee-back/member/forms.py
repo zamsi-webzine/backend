@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from member.models import ZSUser
 
 
+# 유저 생성 폼
 class UserCreationForm(forms.ModelForm):
     email = forms.EmailField(
         label=_('Email address'),
@@ -69,6 +70,7 @@ class UserCreationForm(forms.ModelForm):
         return user
 
 
+# 유저 수정 폼
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(
         label=_('Password')
