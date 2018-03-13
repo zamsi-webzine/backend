@@ -117,6 +117,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Cache Config
+CACHE_TTL = 60 * 15
+
 # Rest frameworks
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
