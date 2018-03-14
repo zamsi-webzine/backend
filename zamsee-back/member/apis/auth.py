@@ -1,15 +1,17 @@
 import json
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.http import HttpResponse
 from rest_framework import status
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
+User = get_user_model()
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
+# JWToken 생성
 class ObtainToken(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # frontend에서 날아온 bytecode를 utf-8로 디코딩
@@ -33,8 +35,6 @@ class ObtainToken(JSONWebTokenAPIView):
             data = {
                 'token': token,
                 'user': {
-                    'pk': user.pk,
-                    'email': user.email,
                     'nickname': user.nickname
                 }
             }
@@ -52,3 +52,72 @@ class ObtainToken(JSONWebTokenAPIView):
         return HttpResponse(json.dumps(data),
                             content_type='application/json; charset=utf-8',
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+# 회원가입
+class Signup(JSONWebTokenAPIView):
+    def post(self, request, *args, **kwargs):
+        body_unicode = request.body.decode('utf-8')
+        payload = json.loads(body_unicode)
+
+        if '' in list(payload.values()):
+            data = {
+                'message': 'Please fill out all of data'
+            }
+
+            return HttpResponse(json.dumps(data),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        email = payload['email']
+        nickname = payload['nickname']
+        password1 = payload['password1']
+        password2 = payload['password2']
+
+        queryset = User.objects.all()
+
+        if queryset.filter(email=email).exists():
+            data = {
+                'message': 'This email is already exists'
+            }
+
+            return HttpResponse(json.dumps(data),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        elif queryset.filter(nickname=nickname).exists():
+            data = {
+                'message': 'This nickname is already exists'
+            }
+
+            return HttpResponse(json.dumps(data),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        elif password1 != password2:
+            data = {
+                'message': 'Password confirmation is not correct'
+            }
+
+            return HttpResponse(json.dumps(data),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            user = User.objects.create_user(
+                email=email,
+                nickname=nickname,
+                password=password2,
+            )
+
+            data = {
+                'user': {
+                    'email': user.email,
+                    'nickname': user.nickname,
+                    'is_active': user.is_active
+                }
+            }
+
+            return HttpResponse(json.dumps(data),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_200_OK)
