@@ -57,9 +57,11 @@ class ObtainToken(JSONWebTokenAPIView):
 # 회원가입
 class Signup(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
+        # 데이터 디코딩
         body_unicode = request.body.decode('utf-8')
         payload = json.loads(body_unicode)
 
+        # 검증 1: 빈 값이 들어왔는가?
         if '' in list(payload.values()):
             data = {
                 'message': 'Please fill out all of data'
@@ -69,13 +71,16 @@ class Signup(JSONWebTokenAPIView):
                                 content_type='application/json; charset=utf-8',
                                 status=status.HTTP_400_BAD_REQUEST)
 
+        # payload에서 값 할당
         email = payload['email']
         nickname = payload['nickname']
         password1 = payload['password1']
         password2 = payload['password2']
 
+        # queryset 호출
         queryset = User.objects.all()
 
+        # 검증 2: 이메일이 이미 존재하는가?
         if queryset.filter(email=email).exists():
             data = {
                 'message': 'This email is already exists'
@@ -85,6 +90,7 @@ class Signup(JSONWebTokenAPIView):
                                 content_type='application/json; charset=utf-8',
                                 status=status.HTTP_400_BAD_REQUEST)
 
+        # 검증 3: 닉네임이 이미 존재하는가?
         elif queryset.filter(nickname=nickname).exists():
             data = {
                 'message': 'This nickname is already exists'
@@ -94,6 +100,7 @@ class Signup(JSONWebTokenAPIView):
                                 content_type='application/json; charset=utf-8',
                                 status=status.HTTP_400_BAD_REQUEST)
 
+        # 검증 4: 패스워드1, 2가 일치하는가?
         elif password1 != password2:
             data = {
                 'message': 'Password confirmation is not correct'
@@ -103,6 +110,7 @@ class Signup(JSONWebTokenAPIView):
                                 content_type='application/json; charset=utf-8',
                                 status=status.HTTP_400_BAD_REQUEST)
 
+        # 모든 검증을 통과하면 유저 생성
         else:
             user = User.objects.create_user(
                 email=email,
