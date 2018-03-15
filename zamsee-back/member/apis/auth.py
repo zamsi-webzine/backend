@@ -1,4 +1,6 @@
 import json
+import random
+import string
 
 import jwt
 from django.conf import settings
@@ -115,7 +117,7 @@ class Signup(JSONWebTokenAPIView):
                     password=password2,
                 )
 
-            return user
+                return user
 
         # 데이터 이메일 전송 함수
         def sending_email(instance):
@@ -127,7 +129,7 @@ class Signup(JSONWebTokenAPIView):
             current_site = get_current_site(request)
             to_email = instance.email
             subject = '[Zamsee] 회원가입 인증 이메일'
-            message = render_to_string('user_activate_email.html', {
+            message = render_to_string('email/user_activate_email.html', {
                 'domain': current_site.domain,
                 'token': token
             })
@@ -195,6 +197,84 @@ class Activate(JSONWebTokenAPIView):
 
             return HttpResponseRedirect('http://localhost:8080/#/dashboard/' + str(user.id))
 
+        else:
+            return HttpResponse(json.dumps(result),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_400_BAD_REQUEST)
+
+
+# 비밀번호 재설정
+class ResetPassword(JSONWebTokenAPIView):
+    def post(self, request, *args, **kwargs):
+        # 데이터 유효성 검증 함수
+        def validate_user(user_info):
+            # 검증 1: 빈 값이 들어왔는가?
+            if '' in list(user_info.values()):
+                msg = {
+                    'message': 'Please fill out all of data'
+                }
+
+                return msg
+
+            # payload에서 값 할당
+            email = user_info['email']
+
+            # queryset 호출
+            queryset = User.objects.all()
+
+            # 검증 2: 이메일이 이미 존재하는가?
+            if not queryset.filter(email=email).exists():
+                msg = {
+                    'message': "This email is doesn't exist"
+                }
+
+                return msg
+
+            else:
+                # 모든 검증을 통과하면 유저 생성
+                user = queryset.get(email=email)
+
+                return user
+
+        # 데이터 이메일 전송 함수
+        def sending_email(instance):
+            # 새 비밀번호 생성
+            new_password = ''.join((random.choice(string.ascii_lowercase) for _ in range(8)))
+
+            # 비밀번호 적용
+            instance.set_password(new_password)
+            instance.save()
+
+            # 이메일 발송에 필요한 정보
+            to_email = instance.email
+            subject = '[Zamsee] 비밀번호 초기화 이메일'
+            message = render_to_string('email/initalize_password.html', {
+                'new_password': new_password
+            })
+            tasks.send_mail_task.delay(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                to_email,
+            )
+
+        # 데이터 디코딩
+        body_unicode = request.body.decode('utf-8')
+        payload = json.loads(body_unicode)
+
+        result = validate_user(payload)
+
+        # 유효성 검증 결과에 따른 결과
+        if type(result) is not dict:
+            sending_email(result)
+
+            data = {
+                'message': 'Please check your email to reset password'
+            }
+
+            return HttpResponse(json.dumps(data),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_200_OK)
         else:
             return HttpResponse(json.dumps(result),
                                 content_type='application/json; charset=utf-8',
