@@ -4,13 +4,14 @@ import jwt
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from rest_framework import status
 from rest_framework_jwt.authentication import jwt_decode_handler
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
+
+from .. import tasks
 
 User = get_user_model()
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -130,14 +131,11 @@ class Signup(JSONWebTokenAPIView):
                 'domain': current_site.domain,
                 'token': token
             })
-            send_mail(
-                subject=subject,
-                message='Activate email',
-                html_message=message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[
-                    to_email
-                ],
+            tasks.send_mail_task.delay(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                to_email,
             )
 
         # 데이터 디코딩
