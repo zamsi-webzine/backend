@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from member import urls
 from member import views
 
 urlpatterns = [
@@ -25,5 +24,6 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('auth/', include('member.urls', namespace='member'))
+    path('auth/', include('member.urls.auth', namespace='authentication')),
+    path('profile/', include('member.urls.profile', namespace='profile')),
 ]
