@@ -24,16 +24,12 @@ class Dashboard(APIView):
     permission_classes = (IsAuthenticated,)
 
     # 캐시 적용을 위한 데코레이터
-    @method_decorator(cache_page(CACHE_TTL))
     def get(self, request, *args, **kwargs):
-        # JWT와 함께 user pk를 필요로 한다
-        user_pk = kwargs['pk']
+        # 쿼리셋 호출
+        queryset = User.objects.all()
 
-        if cache.get('user_query') is not None:
-            queryset = cache.get('user_query')
-        else:
-            queryset = User.objects.all()
-            cache.set('user_query', queryset, CACHE_TTL)
+        # frontend에서 동적으로 매핑된 user_id 값을 pk 값으로 가져온다
+        user_pk = kwargs['pk']
 
         user = queryset.get(pk=user_pk)
         data = {
