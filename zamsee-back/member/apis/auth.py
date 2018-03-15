@@ -68,25 +68,20 @@ class Signup(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # 데이터 유효성 검증 함수
         def validate_user(user_info):
+            payload_tuple = tuple(user_info.values())
             # 검증 1: 빈 값이 들어왔는가?
-            if '' in list(user_info.values()):
+            if '' in payload_tuple:
                 msg = {
                     'message': 'Please fill out all of data'
                 }
 
                 return msg
 
-            # payload에서 값 할당
-            email = user_info['email']
-            nickname = user_info['nickname']
-            password1 = user_info['password1']
-            password2 = user_info['password2']
-
             # queryset 호출
             queryset = User.objects.all()
 
             # 검증 2: 이메일이 이미 존재하는가?
-            if queryset.filter(email=email).exists():
+            if queryset.filter(email=payload_tuple[0]).exists():
                 msg = {
                     'message': 'This email is already exists'
                 }
@@ -94,7 +89,7 @@ class Signup(JSONWebTokenAPIView):
                 return msg
 
             # 검증 3: 닉네임이 이미 존재하는가?
-            elif queryset.filter(nickname=nickname).exists():
+            elif queryset.filter(nickname=payload_tuple[1]).exists():
                 msg = {
                     'message': 'This nickname is already exists'
                 }
@@ -102,7 +97,7 @@ class Signup(JSONWebTokenAPIView):
                 return msg
 
             # 검증 4: 패스워드1, 2가 일치하는가?
-            elif password1 != password2:
+            elif payload_tuple[2] != payload_tuple[3]:
                 msg = {
                     'message': 'Password confirmation is not correct'
                 }
@@ -112,9 +107,9 @@ class Signup(JSONWebTokenAPIView):
             else:
                 # 모든 검증을 통과하면 유저 생성
                 user = User.objects.create_user(
-                    email=email,
-                    nickname=nickname,
-                    password=password2,
+                    email=payload_tuple[0],
+                    nickname=payload_tuple[1],
+                    password=payload_tuple[3],
                 )
 
                 return user
@@ -157,7 +152,7 @@ class Signup(JSONWebTokenAPIView):
 
             return HttpResponse(json.dumps(data),
                                 content_type='application/json; charset=utf-8',
-                                status=status.HTTP_200_OK)
+                                status=status.HTTP_201_CREATED)
         else:
             return HttpResponse(json.dumps(result),
                                 content_type='application/json; charset=utf-8',
