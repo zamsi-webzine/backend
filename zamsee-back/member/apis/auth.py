@@ -195,7 +195,7 @@ class Activate(JSONWebTokenAPIView):
             user.is_active = True
             user.save()
 
-            return HttpResponseRedirect('http://localhost:8080/')
+            return HttpResponseRedirect('http://localhost:8080/#/dashboard/' + str(user.id))
 
         else:
             return HttpResponse(json.dumps(result),
