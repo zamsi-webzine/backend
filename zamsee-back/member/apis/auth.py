@@ -20,7 +20,7 @@ jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
-# JWToken 생성
+# 로그인 / JWToken 생성
 class ObtainToken(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # frontend에서 날아온 bytecode를 utf-8로 디코딩
@@ -63,7 +63,7 @@ class ObtainToken(JSONWebTokenAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-# 회원가입
+# 회원 가입
 class Signup(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # 데이터 유효성 검증 함수
@@ -164,7 +164,7 @@ class Signup(JSONWebTokenAPIView):
                                 status=status.HTTP_400_BAD_REQUEST)
 
 
-# 유저 활성화
+# 회원 활성화
 class Activate(JSONWebTokenAPIView):
     def get(self, request, *args, **kwargs):
         # 토큰 유효성 검증 함수
