@@ -21,7 +21,7 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
 # 로그인 / JWToken 생성
-class ObtainToken(JSONWebTokenAPIView):
+class SignIn(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # frontend에서 날아온 bytecode를 utf-8로 디코딩
         body_unicode = request.body.decode('utf-8')
