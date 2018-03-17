@@ -18,9 +18,6 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 User = get_user_model()
 
-# 캐시 만료 시간 설정
-CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
-
 
 class Dashboard(APIView):
     # 인증 클래스
@@ -123,3 +120,20 @@ class Dashboard(APIView):
         return HttpResponse(json.dumps(data),
                             content_type='application/json; charset=utf-8',
                             status=status.HTTP_200_OK)
+
+    def delete(self, request, *args, **kwargs):
+        # 쿼리셋 호출
+        queryset = User.objects.all()
+
+        # frontend에서 동적으로 매핑된 user_id 값을 pk 값으로 가져온다
+        user_pk = kwargs['pk']
+
+        user = queryset.get(pk=user_pk)
+        user.delete()
+        msg = {
+            'message': 'Your account is deleted'
+        }
+
+        return HttpResponse(json.dumps(msg),
+                            content_type='application/json; charset=utf-8',
+                            status=status.HTTP_204_NO_CONTENT)
