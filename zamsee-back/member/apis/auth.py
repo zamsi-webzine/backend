@@ -21,7 +21,7 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
 # 로그인 / JWToken 생성
-class ObtainToken(JSONWebTokenAPIView):
+class SignIn(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # frontend에서 날아온 bytecode를 utf-8로 디코딩
         body_unicode = request.body.decode('utf-8')
@@ -190,7 +190,7 @@ class Activate(JSONWebTokenAPIView):
             user.is_active = True
             user.save()
 
-            return HttpResponseRedirect('http://localhost:8080/#/dashboard/' + str(user.id))
+            return HttpResponseRedirect('http://localhost:8080/profile/' + str(user.nickname) + '/posts')
 
         else:
             return HttpResponse(json.dumps(result),

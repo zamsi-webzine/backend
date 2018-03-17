@@ -163,6 +163,9 @@ CORS_ORIGIN_WHITELIST = [
     'localhost:8080',
 ]
 
+# CSRF settings
+CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
+
 # Password validation
 
 AUTH_PASSWORD_VALIDATORS = [
