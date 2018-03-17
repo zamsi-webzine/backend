@@ -11,6 +11,10 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_jwt.settings import api_settings
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 User = get_user_model()
 
@@ -45,7 +49,7 @@ class Dashboard(APIView):
         def validate_user(user_info, query):
             # 검증 1: 빈 값이 들어왔는가? (닉네임과 패스워드 1이 함께 비어있는가?)
             payload_list = list(user_info.values())
-            if payload_list[0] and payload_list[1] and payload_list[2] is '':
+            if payload_list[0] == payload_list[1] == payload_list[2]:
                 msg = {
                     'message': 'Please fill out all of data'
                 }
@@ -69,10 +73,9 @@ class Dashboard(APIView):
                 return msg
 
             # 모든 검증을 마치면 빈 값을 지운다
-            elif '' in payload_list:
-                payload_list.remove('')
+            result = [x for x in payload_list if x.strip()]
 
-            return tuple(payload_list)
+            return result
 
         # 데이터 디코딩
         body_unicode = request.body.decode('utf-8')
@@ -105,10 +108,18 @@ class Dashboard(APIView):
             user.nickname = is_validated[0]
             user.save()
 
-        result = {
-            'message': 'User information is modified successfully'
+        # JWT 토큰 생성
+        auth_payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(auth_payload)
+
+        # frontend로 전송할 json 형식 만들기
+        data = {
+            'token': token,
+            'user': {
+                'nickname': user.nickname
+            }
         }
 
-        return HttpResponse(json.dumps(result),
+        return HttpResponse(json.dumps(data),
                             content_type='application/json; charset=utf-8',
-                            status=status.HTTP_206_PARTIAL_CONTENT)
+                            status=status.HTTP_200_OK)
