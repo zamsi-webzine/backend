@@ -162,7 +162,8 @@ JWT_AUTH = {
 # CORS Whitelist
 CORS_ORIGIN_WHITELIST = [
     'localhost:8080',
-    '.zamsee.com',
+    'zamsee.com',
+    'api.zamsee.com',
 ]
 
 # CSRF settings
