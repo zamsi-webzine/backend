@@ -3,6 +3,7 @@
 .static_root/
 .media/
 dump.rdb
+frontend/
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm+all
 
