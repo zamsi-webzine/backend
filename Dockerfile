@@ -35,7 +35,7 @@ RUN         mkdir -p /var/log/uwsgi/app
 WORKDIR     /srv/app/zamsee-back
 RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
 RUN         /root/.pyenv/versions/app/bin/python manage.py migrate --noinput
-RUN         /root/.pyenv/versions/app/bin/python manage.py create_su --noinput
+RUN         /root/.pyenv/versions/app/bin/python manage.py create_su
 
 # Supervisor
 # 설정 파일 복사
