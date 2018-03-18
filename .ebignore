@@ -2,7 +2,7 @@
 !.config_secret/
 .static_root/
 .media/
-!dist/
+!/dist/
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm+all
 
