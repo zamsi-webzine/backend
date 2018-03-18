@@ -1,9 +1,7 @@
 # Custom
 !.config_secret/
-.config_secret/
 .static_root/
 .media/
-!dist/
 !/dist_front/
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm+all
