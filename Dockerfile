@@ -31,6 +31,12 @@ RUN         ln -sf /etc/nginx/sites-available/app.conf \
 # log directory 생성
 RUN         mkdir -p /var/log/uwsgi/app
 
+# manage.py
+WORKDIR     /srv/app/zamsee-back
+RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
+RUN         /root/.pyenv/versions/app/bin/python manage.py migrate --noinput
+RUN         /root/.pyenv/versions/app/bin/python manage.py create_su --noinput
+
 # Supervisor
 # 설정 파일 복사
 RUN         cp /srv/app/.config/supervisor/base/* \

@@ -51,7 +51,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.elasticbeanstalk.com',
-    '.zamsee.com',
+    '.api.zamsee.com',
 ]
 
 # Email configuration
@@ -78,11 +78,8 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     # Rest frameworks
     'rest_framework',
-<<<<<<< HEAD
     'storages',
-=======
     'rest_framework.authtoken',
->>>>>>> user
 ]
 
 USER_APPS = [

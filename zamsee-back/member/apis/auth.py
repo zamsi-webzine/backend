@@ -190,7 +190,7 @@ class Activate(JSONWebTokenAPIView):
             user.is_active = True
             user.save()
 
-            return HttpResponseRedirect('http://localhost:8080/profile/' + str(user.nickname) + '/posts')
+            return HttpResponseRedirect('https://zamsee.com/')
 
         else:
             return HttpResponse(json.dumps(result),
