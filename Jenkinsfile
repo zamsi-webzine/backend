@@ -25,8 +25,6 @@ node {
             currentBuild.result = 'FAILURE'
         }
         finally {
-            junit './zamsee-back/reports/junit.xml'
-
             if (testsError) {
                 throw testsError
             }
