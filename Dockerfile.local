@@ -58,6 +58,7 @@ RUN         echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.c
 
 # re-change user
 USER        root
+RUN         /srv/app/docker_migrate.sh
 
 # foreground 실행
 CMD         supervisord -n

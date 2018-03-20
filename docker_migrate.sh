@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd zamsee-back
 /etc/init.d/postgresql start
-./manage.py migrate --noinput
-./manage.py create_su
+cd zamsee-back
+/root/.pyenv/versions/app/bin/python manage.py migrate --noinput
+/root/.pyenv/versions/app/bin/python manage.py create_su
