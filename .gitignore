@@ -2,9 +2,7 @@
 .config_secret/
 .static_root/
 .media/
-dump.rdb
 dist_front/
-secrets.zip
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm+all
 
