@@ -2,8 +2,7 @@
 .config_secret/
 .static_root/
 .media/
-dump.rdb
-frontend/
+dist_front/
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm+all
 
