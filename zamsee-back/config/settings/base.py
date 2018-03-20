@@ -77,6 +77,8 @@ THIRD_PARTY_APPS = [
     # Rest frameworks
     'rest_framework',
     'rest_framework.authtoken',
+    # Jenkins
+    'django_jenkins',
 ]
 
 USER_APPS = [
@@ -120,6 +122,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+# Jenkins integration
+PROJECT_APPS = ['member']
 
 # Cache Config
 CACHE_TTL = 60 * 15
