@@ -8,6 +8,11 @@ pipeline {
                 sh 'pip install -r requirements/local.txt'
             }
         }
+        stage ('Unzip Secrets Stage') {
+            steps {
+                sh 'unzip -o -P $PASSWORD_ZIP secrets.zip'
+            }
+        }
 
         stage ('Test Stage') {
             steps {
