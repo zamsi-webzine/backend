@@ -3,6 +3,7 @@
 .static_root/
 .media/
 dist_front/
+secrets.zip
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm+all
 
