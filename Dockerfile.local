@@ -48,6 +48,9 @@ RUN         ln -sf /etc/nginx/sites-available/app.conf \
 # log directory 생성
 RUN         mkdir -p /var/log/uwsgi/app
 
+# Redis
+RUN         cp /srv/app/.config/redis/local/redis.conf /etc/redis.conf
+
 # Supervisor
 # 설정 파일 복사
 RUN         cp /srv/app/.config/supervisor/base/* \
