@@ -1,23 +1,34 @@
-pipeline {
-    agent none
+node {
+    stage ('Checkout Stage') {
+        checkout scm
+    }
 
-    stages {
-        stage ('Install Stage') {
-            steps {
-                sh 'pyenv local zamsi-back'
-                sh 'pip install -r requirements/local.txt'
-            }
-        }
-        stage ('Unzip Secrets Stage') {
-            steps {
-                sh 'unzip -o -P $PASSWORD_ZIP secrets.zip'
-            }
-        }
+    stage ('Install virtualenv Stage') {
+        sh 'pyenv local zamsi-back'
+    }
 
-        stage ('Test Stage') {
-            steps {
-                sh 'cd zamsee-back'
-                sh 'python manage.py jenkins -v 2'
+    stage('Install Application Dependencies') {
+        sh 'pip install -r requirements/local.txt'
+    }
+
+    stage ('Unzip Secrets Stage') {
+        sh 'unzip -o -P $PASSWORD_ZIP secrets.zip'
+    }
+
+    stage ('Test Stage') {
+        def testsError = null
+        try {
+            sh 'python ./zamsee-back/manage.py jenkins
+        }
+        catch(err) {
+            testsError = err
+            currentBuild.result = 'FAILURE'
+        }
+        finally {
+            junit './zamsee-back/reports/junit.xml'
+
+            if (testsError) {
+                throw testsError
             }
         }
     }
