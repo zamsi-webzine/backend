@@ -1,0 +1,19 @@
+pipeline {
+    agent none
+
+    stages {
+        stage ('Install Stage') {
+            steps {
+                sh 'pyenv local zamsi-back'
+                sh 'pip install -r requirements/local.txt'
+            }
+        }
+
+        stage ('Test Stage') {
+            steps {
+                sh 'cd zamsee-back'
+                sh 'python manage.py jenkins -v 2'
+            }
+        }
+    }
+}
