@@ -18,7 +18,7 @@ node {
     stage ('Test Stage') {
         def testsError = null
         try {
-            sh 'python ./zamsee-back/manage.py jenkins
+            sh 'python ./zamsee-back/manage.py jenkins'
         }
         catch(err) {
             testsError = err
