@@ -4,7 +4,6 @@ node {
     }
 
     stage ('Install virtualenv Stage') {
-        sh 'source ~/.bashrc'
         sh 'pyenv local zamsee-back'
     }
 
