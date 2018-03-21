@@ -67,10 +67,9 @@ class SignIn(JSONWebTokenAPIView):
 class Signup(JSONWebTokenAPIView):
     def post(self, request, *args, **kwargs):
         # 데이터 유효성 검증 함수
-        def validate_user(user_info):
-            payload_tuple = tuple(user_info.values())
+        def validate_user(form_data):
             # 검증 1: 빈 값이 들어왔는가?
-            if '' in payload_tuple:
+            if '' in form_data:
                 msg = {
                     'message': 'Please fill out all of data'
                 }
@@ -81,7 +80,7 @@ class Signup(JSONWebTokenAPIView):
             queryset = User.objects.all()
 
             # 검증 2: 이메일이 이미 존재하는가?
-            if queryset.filter(email=payload_tuple[0]).exists():
+            if queryset.filter(email=form_data[0]).exists():
                 msg = {
                     'message': 'This email is already exists'
                 }
@@ -89,7 +88,7 @@ class Signup(JSONWebTokenAPIView):
                 return msg
 
             # 검증 3: 닉네임이 이미 존재하는가?
-            elif queryset.filter(nickname=payload_tuple[1]).exists():
+            elif queryset.filter(nickname=form_data[1]).exists():
                 msg = {
                     'message': 'This nickname is already exists'
                 }
@@ -97,7 +96,7 @@ class Signup(JSONWebTokenAPIView):
                 return msg
 
             # 검증 4: 패스워드1, 2가 일치하는가?
-            elif payload_tuple[2] != payload_tuple[3]:
+            elif form_data[2] != form_data[3]:
                 msg = {
                     'message': 'Password confirmation is not correct'
                 }
@@ -105,14 +104,7 @@ class Signup(JSONWebTokenAPIView):
                 return msg
 
             else:
-                # 모든 검증을 통과하면 유저 생성
-                user = User.objects.create_user(
-                    email=payload_tuple[0],
-                    nickname=payload_tuple[1],
-                    password=payload_tuple[3],
-                )
-
-                return user
+                return True
 
         # 데이터 이메일 전송 함수
         def sending_email(instance):
@@ -128,6 +120,7 @@ class Signup(JSONWebTokenAPIView):
                 'domain': current_site.domain,
                 'token': token
             })
+            # 메일 전송은 Celery로 비동기 처리
             tasks.send_mail_task.delay(
                 subject,
                 message,
@@ -138,14 +131,28 @@ class Signup(JSONWebTokenAPIView):
         # 데이터 디코딩
         body_unicode = request.body.decode('utf-8')
         payload = json.loads(body_unicode)
+        payload_tuple = tuple(payload.values())
 
         # 유효성 검증
-        result = validate_user(payload)
+        result = validate_user(payload_tuple)
 
-        # 유효성 검증 결과에 따른 결과
-        if type(result) is not dict:
-            sending_email(result)
+        # 검증을 통과하지 못하면 에러 메시지 리턴
+        if result is not True:
+            return HttpResponse(json.dumps(result),
+                                content_type='application/json; charset=utf-8',
+                                status=status.HTTP_400_BAD_REQUEST)
 
+        # 모든 검증을 통과하면 유저 생성
+        else:
+            user = User.objects.create_user(
+                email=payload_tuple[0],
+                nickname=payload_tuple[1],
+                password=payload_tuple[3],
+            )
+            # 메일 전송
+            sending_email(user)
+
+            # 성공 메시지 리턴
             data = {
                 'message': 'Please check your email to activate'
             }
@@ -153,10 +160,6 @@ class Signup(JSONWebTokenAPIView):
             return HttpResponse(json.dumps(data),
                                 content_type='application/json; charset=utf-8',
                                 status=status.HTTP_201_CREATED)
-        else:
-            return HttpResponse(json.dumps(result),
-                                content_type='application/json; charset=utf-8',
-                                status=status.HTTP_400_BAD_REQUEST)
 
 
 # 회원 활성화
@@ -190,7 +193,7 @@ class Activate(JSONWebTokenAPIView):
             user.is_active = True
             user.save()
 
-            return HttpResponseRedirect('http://localhost:8080/profile/posts')
+            return HttpResponseRedirect('http://localhost:8080/')
 
         else:
             return HttpResponse(json.dumps(result),
@@ -217,7 +220,7 @@ class ResetPassword(JSONWebTokenAPIView):
             # queryset 호출
             queryset = User.objects.all()
 
-            # 검증 2: 이메일이 이미 존재하는가?
+            # 검증 2: 이메일이 존재하긴 하는가?
             if not queryset.filter(email=email).exists():
                 msg = {
                     'message': "This email is doesn't exist"

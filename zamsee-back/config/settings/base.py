@@ -162,11 +162,13 @@ JWT_AUTH = {
 }
 
 # CORS Whitelist
+# Frontend 주소는 요청을 허용하도록 해 줌
 CORS_ORIGIN_WHITELIST = [
     'localhost:8080',
 ]
 
 # CSRF settings
+# Frontend의 Axios와 통신을 가능케 해 줌
 CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
 
 # Password validation
