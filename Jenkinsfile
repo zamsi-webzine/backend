@@ -17,7 +17,7 @@ node {
     stage ('Test Stage') {
         def testsError = null
         try {
-            sh 'sudo /home/ubuntu/.pyenv/versions/zamsee-back/bin/python ./zamsee-back/manage.py test'
+            sh 'sudo /home/ubuntu/.pyenv/versions/zamsee-back/bin/python ./zamsee-back/manage.py jenkins --enable-coverage'
         }
         catch(err) {
             testsError = err
