@@ -5,6 +5,7 @@ node {
 
     stage('Install Application Dependencies') {
         sh 'source /home/ubuntu/.bashrc'
+        sh 'pyenv local zamsee-back'
         sh 'python -m pip install -r requirements/local.txt'
     }
 
