@@ -4,6 +4,7 @@ node {
     }
 
     stage('Install Application Dependencies') {
+        sh 'source ~/.bashrc'
         sh 'python -m pip install -r requirements/local.txt'
     }
 
