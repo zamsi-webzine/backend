@@ -11,6 +11,7 @@ cement==2.8.2
 certifi==2018.1.18
 chardet==3.0.4
 colorama==0.3.7
+coverage==4.5.1
 decorator==4.2.1
 Django==2.0.2
 django-cors-headers==2.2.0
