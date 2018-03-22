@@ -7,7 +7,7 @@ node {
         sh 'source /home/ubuntu/.bashrc'
         sh '/home/ubuntu/.pyenv/libexec/pyenv global 3.6.3'
         sh '/home/ubuntu/.pyenv/libexec/pyenv local zamsee-back'
-        sh 'pip install -r requirements/local.txt'
+        sh '/home/ubuntu/.pyenv/versions/zamsee-back/bin/pip install -r requirements/local.txt'
     }
 
     stage ('Unzip Secrets Stage') {
