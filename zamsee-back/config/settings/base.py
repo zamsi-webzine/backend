@@ -127,6 +127,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Jenkins integration
 PROJECT_APPS = ['member']
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pylint',
+    'django_jenkins.tasks.run_pep8',
+)
 
 # Cache Config
 CACHE_TTL = 60 * 15

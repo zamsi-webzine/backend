@@ -1,1 +1,0 @@
-<testsuite errors="0" failures="0" name="Django Project Tests" skips="0" tests="1" time="0.510"><testcase classname="member.tests.UserSignUpTest" name="test_signup_url_name_reverse" time="0.014142" /></testsuite>
