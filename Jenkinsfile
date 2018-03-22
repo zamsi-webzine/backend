@@ -4,7 +4,7 @@ node {
     }
 
     stage('Install Application Dependencies') {
-        sh 'pip install -r requirements/local.txt'
+        sh 'python -m pip install -r requirements/local.txt'
     }
 
     stage ('Unzip Secrets Stage') {
@@ -14,7 +14,7 @@ node {
     stage ('Test Stage') {
         def testsError = null
         try {
-            sh 'python ./zamsee-back/manage.py jenkins'
+            sh 'python -m ./zamsee-back/manage.py jenkins'
         }
         catch(err) {
             testsError = err
