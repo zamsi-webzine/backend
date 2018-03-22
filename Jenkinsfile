@@ -3,10 +3,6 @@ node {
         checkout scm
     }
 
-    stage ('Install virtualenv Stage') {
-        sh 'pyenv local zamsee-back'
-    }
-
     stage('Install Application Dependencies') {
         sh 'pip install -r requirements/local.txt'
     }
