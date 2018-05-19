@@ -1,17 +1,16 @@
 import json
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.cache import cache
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from rest_framework import status
+from rest_framework import status, generics
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
+
+from ..serializers import UserSerializer
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -108,12 +107,14 @@ class Dashboard(APIView):
         # JWT 토큰 생성
         auth_payload = jwt_payload_handler(user)
         token = jwt_encode_handler(auth_payload)
+        current_site = get_current_site(request)
 
         # frontend로 전송할 json 형식 만들기
         data = {
             'token': token,
             'user': {
-                'nickname': user.nickname
+                'nickname': user.nickname,
+                'thumbnail': 'http://' + current_site.domain + user.thumbnail.url
             }
         }
 
@@ -137,3 +138,11 @@ class Dashboard(APIView):
         return HttpResponse(json.dumps(msg),
                             content_type='application/json; charset=utf-8',
                             status=status.HTTP_204_NO_CONTENT)
+
+
+class ThumbnailUpdate(generics.UpdateAPIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    parser_classes = (MultiPartParser, FormParser,)
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
