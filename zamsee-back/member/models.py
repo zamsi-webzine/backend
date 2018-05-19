@@ -49,6 +49,11 @@ class ZSUser(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('Date joined'),
         default=timezone.now
     )
+    thumbnail = models.ImageField(
+        verbose_name=_('Thumbnail'),
+        upload_to='thumbnail',
+        blank=True
+    )
 
     objects = ZSUserManager()
 
