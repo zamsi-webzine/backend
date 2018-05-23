@@ -28,6 +28,7 @@ urlpatterns = [
 urlpatterns += [
     path('auth/', include('member.urls.auth', namespace='authentication')),
     path('profile/', include('member.urls.profile', namespace='profile')),
+    path('post/', include('post.urls', namespace='post')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
