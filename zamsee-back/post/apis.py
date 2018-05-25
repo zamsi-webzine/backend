@@ -3,7 +3,8 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 
-from post.models import Post
+from .models import Post
+from .pagination import PostPagination
 from .serializers import PostSerializer
 
 User = get_user_model()
@@ -11,6 +12,7 @@ User = get_user_model()
 
 class PostCreateList(ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
+    pagination_class = PostPagination
     parser_classes = (MultiPartParser, FormParser,)
     serializer_class = PostSerializer
     queryset = Post.objects.all()
