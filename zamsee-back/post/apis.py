@@ -15,7 +15,9 @@ class PostCreateList(ListCreateAPIView):
     pagination_class = PostPagination
     parser_classes = (MultiPartParser, FormParser,)
     serializer_class = PostSerializer
-    queryset = Post.objects.all()
+
+    def get_queryset(self):
+        return Post.objects.filter(author_id=self.kwargs['author_pk'])
 
     def perform_create(self, serializer):
         user = User.objects.get(pk=self.kwargs['author_pk'])
