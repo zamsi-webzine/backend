@@ -41,14 +41,24 @@ class SignIn(JSONWebTokenAPIView):
             token = jwt_encode_handler(auth_payload)
             current_site = get_current_site(request)
 
-            # frontend로 전송할 json 형식 만들기
-            data = {
-                'token': token,
-                'user': {
-                    'nickname': user.nickname,
-                    'thumbnail': 'http://' + current_site.domain + user.thumbnail.url
+            if user.thumbnail:
+                # frontend로 전송할 json 형식 만들기
+                data = {
+                    'token': token,
+                    'user': {
+                        'nickname': user.nickname,
+                        'thumbnail': 'http://' + current_site.domain + user.thumbnail.url
+                    }
                 }
-            }
+
+            else:
+                data = {
+                    'token': token,
+                    'user': {
+                        'nickname': user.nickname,
+                        'thumbnail': 'null'
+                    }
+                }
 
             # data를 json으로 압축해 전송
             return HttpResponse(json.dumps(data),
@@ -116,11 +126,12 @@ class Signup(JSONWebTokenAPIView):
 
             # 이메일 발송에 필요한 정보
             current_site = get_current_site(request)
-            to_email = instance.email
+            to_email = 'editor@zamsee.com'
             subject = '[Zamsee] 회원가입 인증 이메일'
             message = render_to_string('email/user_activate_email.html', {
                 'domain': current_site.domain,
-                'token': token
+                'token': token,
+                'email': instance.email
             })
             # 메일 전송은 Celery로 비동기 처리
             tasks.send_mail_task.delay(
@@ -195,7 +206,9 @@ class Activate(JSONWebTokenAPIView):
             user.is_active = True
             user.save()
 
-            return HttpResponseRedirect('http://localhost:8080/')
+            current_site = get_current_site(request)
+
+            return HttpResponseRedirect(f'http://{current_site.domain}')
 
         else:
             return HttpResponse(json.dumps(result),
