@@ -11,6 +11,16 @@ class Post(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=False)
 
+    CATEGORY_CHOICES = (
+        ('R', 're-view'),
+        ('E', 'enter-view'),
+        ('O', 'over-view'),
+    )
+
+    category = models.CharField(max_length=1,
+                                choices=CATEGORY_CHOICES,
+                                default='R')
+
     class Meta:
         ordering = ['-date_created']
 
