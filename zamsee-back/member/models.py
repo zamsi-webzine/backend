@@ -52,7 +52,8 @@ class ZSUser(AbstractBaseUser, PermissionsMixin):
     thumbnail = models.ImageField(
         verbose_name=_('Thumbnail'),
         upload_to='thumbnail',
-        blank=True
+        blank=True,
+        null=True,
     )
 
     objects = ZSUserManager()
