@@ -13,6 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'title',
+            'thumbnail',
             'post',
             'date_created',
             'is_published',
