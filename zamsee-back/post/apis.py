@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
@@ -40,3 +40,12 @@ class PostClientList(ListAPIView):
     parser_classes = (MultiPartParser, FormParser,)
     serializer_class = PostSerializer
     queryset = Post.objects.filter(is_published=True)
+
+
+class PostClientRetrieve(RetrieveAPIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (MultiPartParser, FormParser,)
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(is_published=True)
+    lookup_field = 'id'
+    lookup_url_kwarg = 'post_pk'

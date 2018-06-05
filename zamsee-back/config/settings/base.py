@@ -234,3 +234,7 @@ def get_linux_ec2_private_ip():
     except Exception as e:
         print(e)
         return None
+
+
+# DATA_UPLOAD_MAX_MEMORY_SIZE = 약 50MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
