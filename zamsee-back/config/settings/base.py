@@ -51,6 +51,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.elasticbeanstalk.com',
+    '.api.zamsee.com',
 ]
 
 # Email configuration
@@ -172,6 +173,8 @@ JWT_AUTH = {
 # Frontend 주소는 요청을 허용하도록 해 줌
 CORS_ORIGIN_WHITELIST = [
     'localhost:8080',
+    'zamsee.com',
+    'api.zamsee.com',
 ]
 
 # CSRF settings

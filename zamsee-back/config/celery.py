@@ -7,9 +7,8 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 app = Celery('config',
-             # 브로커는 Redis 사용
-             broker='redis://localhost:6379/0',
-             backend='redis://localhost:6379/0')
+             broker='redis://zamsee-redis.sgm0ct.ng.0001.apn2.cache.amazonaws.com:6379',
+             backend='redis://zamsee-redis.sgm0ct.ng.0001.apn2.cache.amazonaws.com:6379')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 

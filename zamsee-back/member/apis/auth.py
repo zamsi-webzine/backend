@@ -206,9 +206,7 @@ class Activate(JSONWebTokenAPIView):
             user.is_active = True
             user.save()
 
-            current_site = get_current_site(request)
-
-            return HttpResponseRedirect(f'http://{current_site.domain}')
+            return HttpResponseRedirect('https://zamsee.com/')
 
         else:
             return HttpResponse(json.dumps(result),
