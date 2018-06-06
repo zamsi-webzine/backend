@@ -49,3 +49,27 @@ class PostClientRetrieve(RetrieveAPIView):
     queryset = Post.objects.filter(is_published=True)
     lookup_field = 'id'
     lookup_url_kwarg = 'post_pk'
+
+
+class PostClientListReView(ListAPIView):
+    permission_classes = (AllowAny,)
+    pagination_class = PostPagination
+    parser_classes = (MultiPartParser, FormParser,)
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(is_published=True).filter(category='R')
+
+
+class PostClientListEnterView(ListAPIView):
+    permission_classes = (AllowAny,)
+    pagination_class = PostPagination
+    parser_classes = (MultiPartParser, FormParser,)
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(is_published=True).filter(category='E')
+
+
+class PostClientListOverView(ListAPIView):
+    permission_classes = (AllowAny,)
+    pagination_class = PostPagination
+    parser_classes = (MultiPartParser, FormParser,)
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(is_published=True).filter(category='O')
