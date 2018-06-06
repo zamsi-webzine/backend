@@ -16,23 +16,6 @@ RUN         /root/.pyenv/versions/app/bin/pip install -r \
 WORKDIR     /srv/app
 RUN         pyenv local app
 
-# Supervisor 실행을 위한 준비
-# https://nicksergeant.com/using-postgresql-with-supervisor-on-ubuntu-1010/
-# Postgresql 정지
-RUN         /etc/init.d/postgresql stop
-# 실행 파일을 다른 곳에 옮겨 둠
-RUN         mkdir ~/safe_dir
-RUN         mv /etc/init.d/postgresql ~/safe_dir/postgresql
-# 유저 Permission 등급 수정한 파일 복사
-RUN         cp /srv/app/.config/postgresql/pg_hba.conf \
-            /etc/postgresql/9.5/main/pg_hba.conf
-# Supervisor를 위해 세팅한 설정 파일 복사
-RUN         cp /srv/app/.config/postgresql/postgresql.conf \
-            /etc/postgresql/9.5/main/postgresql.conf
-# 설정 파일을 심볼릭 링크로 연결
-RUN         ln -sf /etc/postgresql/9.5/main/postgresql.conf \
-            /var/lib/postgresql/9.5/main/postgresql.conf
-
 # Nginx
 # Nginx 메인 설정 파일을 복사
 RUN         cp /srv/app/.config/nginx/base/nginx.conf /etc/nginx/nginx.conf
@@ -54,9 +37,34 @@ RUN         cp /srv/app/.config/supervisor/base/* \
                 /etc/supervisor/conf.d/
 RUN         cp /srv/app/.config/supervisor/local/* \
                 /etc/supervisor/conf.d/
+
+# Run the rest of the commands as the ``postgres`` user created by the ``postgres-9.3`` package when it was ``apt-get installed``
+USER        postgres
+
+# Create a PostgreSQL role named ``docker`` with ``docker`` as the password and
+# then create a database `docker` owned by the ``docker`` role.
+# Note: here we use ``&&\`` to run commands one after the other - the ``\``
+#       allows the RUN command to span multiple lines.
+RUN         /etc/init.d/postgresql start &&\
+            psql --command "CREATE USER zamsee WITH SUPERUSER PASSWORD 'Submarineisdown!';" &&\
+            createdb -O zamsee zamsee_local
+
+# Adjust PostgreSQL configuration so that remote connections to the
+# database are possible.
+RUN         echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.5/main/pg_hba.conf
+
+# And add ``listen_addresses`` to ``/etc/postgresql/9.3/main/postgresql.conf``
+RUN         echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.conf
+
+# re-change user
+USER        root
+RUN         /srv/app/docker_migrate.sh
+
 # foreground 실행
 CMD         supervisord -n
 
 # Port open
 EXPOSE      80
+EXPOSE      81
 EXPOSE      5432
+EXPOSE      6379

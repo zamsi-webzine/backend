@@ -9,6 +9,8 @@
 
 <h2>[Zamsee] 회원 가입 인증 이메일</h2>
 
+<p>{{ email }} 님께서 가입 신청을 하셨습니다.</p>
+
 <p>회원가입 인증 절차를 위해 아래 링크를 클릭해주세요.</p>
 
 <a href="http://{{ domain }}{% url 'authentication:activate' token=token %}">Activate</a>

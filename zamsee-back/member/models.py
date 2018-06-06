@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework.authtoken.models import Token
 
 
+# 장고 공식 문서 참고
 class ZSUserManager(BaseUserManager):
     def create_user(self, email, nickname, password=None):
         if not email:
@@ -32,6 +33,7 @@ class ZSUserManager(BaseUserManager):
         return user
 
 
+# 인증 관련 다중 상속만 추가: PermissionsMixin
 class ZSUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name=_('Email address'),
@@ -46,6 +48,12 @@ class ZSUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(
         verbose_name=_('Date joined'),
         default=timezone.now
+    )
+    thumbnail = models.ImageField(
+        verbose_name=_('Thumbnail'),
+        upload_to='thumbnail',
+        blank=True,
+        null=True,
     )
 
     objects = ZSUserManager()

@@ -80,10 +80,13 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'storages',
     'rest_framework.authtoken',
+    # Jenkins
+    'django_jenkins',
 ]
 
 USER_APPS = [
     'member',
+    'post'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + USER_APPS
@@ -124,6 +127,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Jenkins integration
+PROJECT_APPS = ['member']
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pylint',
+    'django_jenkins.tasks.run_pep8',
+)
+
 # Cache Config
 CACHE_TTL = 60 * 15
 
@@ -160,6 +170,7 @@ JWT_AUTH = {
 }
 
 # CORS Whitelist
+# Frontend 주소는 요청을 허용하도록 해 줌
 CORS_ORIGIN_WHITELIST = [
     'localhost:8080',
     'zamsee.com',
@@ -167,6 +178,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 # CSRF settings
+# Frontend의 Axios와 통신을 가능케 해 줌
 CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
 
 # Password validation
@@ -225,3 +237,7 @@ def get_linux_ec2_private_ip():
     except Exception as e:
         print(e)
         return None
+
+
+# DATA_UPLOAD_MAX_MEMORY_SIZE = 약 50MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800

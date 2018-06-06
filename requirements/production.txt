@@ -11,10 +11,12 @@ cement==2.8.2
 certifi==2018.1.18
 chardet==3.0.4
 colorama==0.3.7
+coverage==4.5.1
 decorator==4.2.1
 Django==2.0.2
 django-cors-headers==2.2.0
 django-extensions==2.0.0
+django-jenkins==0.110.0
 django-redis==4.9.0
 django-storages==1.6.5
 djangorestframework==3.7.7
@@ -32,6 +34,7 @@ jmespath==0.9.3
 kombu==4.1.0
 parso==0.1.1
 pathspec==0.5.5
+pep8==1.7.1
 pexpect==4.4.0
 pickleshare==0.7.4
 Pillow==5.0.0
@@ -41,6 +44,7 @@ ptyprocess==0.5.2
 pyasn1==0.4.2
 Pygments==2.2.0
 PyJWT==1.6.0
+pylint==1.8.3
 python-dateutil==2.6.1
 pytz==2018.3
 PyYAML==3.12
