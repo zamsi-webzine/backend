@@ -27,6 +27,7 @@ class PostCreateList(ListCreateAPIView):
 class PostRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = PostSerializer
+    parser_classes = (MultiPartParser, FormParser,)
     lookup_url_kwarg = 'post_pk'
 
     def get_queryset(self):
