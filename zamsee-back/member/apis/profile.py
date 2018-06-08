@@ -107,16 +107,26 @@ class Dashboard(APIView):
         # JWT 토큰 생성
         auth_payload = jwt_payload_handler(user)
         token = jwt_encode_handler(auth_payload)
-        current_site = get_current_site(request)
 
         # frontend로 전송할 json 형식 만들기
-        data = {
-            'token': token,
-            'user': {
-                'nickname': user.nickname,
-                'thumbnail': 'http://' + current_site.domain + user.thumbnail.url
+        if user.thumbnail:
+            # frontend로 전송할 json 형식 만들기
+            data = {
+                'token': token,
+                'user': {
+                    'nickname': user.nickname,
+                    'thumbnail': user.thumbnail.url
+                }
             }
-        }
+
+        else:
+            data = {
+                'token': token,
+                'user': {
+                    'nickname': user.nickname,
+                    'thumbnail': 'null'
+                }
+            }
 
         return HttpResponse(json.dumps(data),
                             content_type='application/json; charset=utf-8',
