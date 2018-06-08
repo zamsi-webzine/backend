@@ -39,7 +39,6 @@ class SignIn(JSONWebTokenAPIView):
             # JWT 토큰 생성
             auth_payload = jwt_payload_handler(user)
             token = jwt_encode_handler(auth_payload)
-            current_site = get_current_site(request)
 
             if user.thumbnail:
                 # frontend로 전송할 json 형식 만들기
@@ -47,7 +46,7 @@ class SignIn(JSONWebTokenAPIView):
                     'token': token,
                     'user': {
                         'nickname': user.nickname,
-                        'thumbnail': 'http://' + current_site.domain + user.thumbnail.url
+                        'thumbnail': user.thumbnail.url
                     }
                 }
 
