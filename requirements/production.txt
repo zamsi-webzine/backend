@@ -22,7 +22,7 @@ django-extensions==2.0.0
 django-jenkins==0.110.0
 django-redis==4.9.0
 django-storages==1.6.5
-djangorestframework==3.7.7
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 docker==3.3.0
 docker-compose==1.21.2
